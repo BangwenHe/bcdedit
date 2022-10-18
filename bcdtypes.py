@@ -3,25 +3,25 @@
 # Copyright (C) 2012 Loic Jaquemet loic.jaquemet+python@gmail.com
 #
 
-import haystack
-from haystack.model import LoadableMembersStructure,RangeValue,NotNull,CString
+# import haystack
+# from haystack.model import LoadableMembersStructure,RangeValue,NotNull,CString
 import ctypes
 
 
 ULONG = ctypes.c_uint
 
-class BcdElementType(LoadableMembersStructure):
-  _fields_ = [
-    ('SubType', ULONG, 24),
-    ('Format', ULONG, 4),
-    ('Class', ULONG, 4),
-]
+# class BcdElementType(LoadableMembersStructure):
+#   _fields_ = [
+#     ('SubType', ULONG, 24),
+#     ('Format', ULONG, 4),
+#     ('Class', ULONG, 4),
+# ]
 
 
-BcdElementType.expectedValues = {
-  'Format': RangeValue(1,7),
-  'Class': [1,2,3,5]
-  }
+# BcdElementType.expectedValues = {
+#   'Format': RangeValue(1,7),
+#   'Class': [1,2,3,5]
+#   }
 
 
 #class BcdElementType(LoadableMembersStructure):
@@ -157,6 +157,7 @@ _EL_OBJECT_CODE = {
   0x1: 'Application',
   0x2: 'Inheritable',
   0x3: 'Device',
+  0x4: 'Error'
 }
 
 def object_code_desc(i):

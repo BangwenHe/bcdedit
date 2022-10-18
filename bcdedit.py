@@ -7,7 +7,6 @@
 __author__ = "Loic Jaquemet loic.jaquemet+python@gmail.com"
 
 import argparse
-import ctypes
 import functools
 import logging
 import os
@@ -25,12 +24,12 @@ import bcdtypes
 
 def show(opts):
   f = opts.bcdfile
-  print "%s: %d bytes"%(f.name, os.path.getsize(f.name))
-  print '---'
+  print("%s: %d bytes"%(f.name, os.path.getsize(f.name)))
+  print('---')
   h = hivex.Hivex(f.name)
   h.debug=opts.debug
   r = h.root()
-  print h.node_name( r )
+  print(h.node_name( r ))
   # print childs
   print_objects(h, r, '')
 
@@ -43,12 +42,12 @@ def print_objects(h, root, prefix):
   dbg = ''
 
   for c in getchildren( root ):
-    print '%s\t%s'%(prefix, getname(c))
+    print('%s\t%s'%(prefix, getname(c)))
     if getname(c) == 'Objects':
       for guid_node in getchildren( c ):
         guid = uuid.UUID(getname(guid_node))
         guid_desc = bcdtypes.guid_desc(str(guid))
-        print '%s\t%s - %s %d'%(prefix, guid, guid_desc, guid_node)
+        print('%s\t%s - %s %d'%(prefix, guid, guid_desc, guid_node))
         print_name_rec(h, guid_node, prefix+'\t')
     else:
       pass # Description ?
@@ -65,7 +64,7 @@ def print_name_rec(h, node, prefix):
   else:
     for c in getchildren( node ):
       if h.debug: dbg = ' (%s)'%(ts(node)) 
-      print '%s\t%s%s'%(prefix, getname(c), dbg)
+      print('%s\t%s%s'%(prefix, getname(c), dbg))
       print_name_rec(h, c, prefix+'\t')
     else:
       pass
@@ -86,10 +85,10 @@ def print_name_el(h, node, prefix):
     # get the object code ? first 4 bits
     code = bcdtypes.object_code_desc(obj_type)
     #code = el_to_bin(obj_type)
-    print '%s\t%x %s %s%s'%(prefix, obj_type, code,  name,  dbg),
+    print('%s\t%x %s %s%s'%(prefix, obj_type, code,  name,  dbg), end=' ')
     vals = h.node_values(c)
     for v in vals:
-      print v, el_to_bin_16(v), h.value_type(v)
+      print(v, el_to_bin_16(v), h.value_type(v))
 
   #print h.node_values(node)
 
